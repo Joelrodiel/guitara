@@ -3,21 +3,33 @@
         <div class="bgIMG">
             <div class="spacer"></div>
             <div v-for="j in 7" :key="j" class="looper">
-                <div v-for="i in 6" :key="i" class="papa">
+                <label v-for="i in 6" :key="i" class="papa">
                     <input type="checkbox" class="select">
                     <span class="select"></span>
-                </div>
+                </label>
             </div>
         </div>
-        <button class="button btn-left">X</button>
-        <button class="button">A#7</button>
+        <button class="button btn-left" v-on:click="uncheckAll">X</button>
+        <button class="button">--</button>
         <button class="button btn-right">O</button>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Chord'
+    name: 'Chord',
+    methods: {
+        uncheckAll() {
+            var checkboxes = new Array();
+            checkboxes = document.getElementsByClassName('select');
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
 }
 </script>
 
@@ -65,19 +77,8 @@ export default {
 .btn-right {
     border-bottom-right-radius: 8px;
 }
-.select {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: black;
-    margin: 0;
-    width: 30px;
-    height: 30px;
-    transform: translate(12px, 12px);
-    border-radius: 50%;
-}
 .spacer {
-    height: 18px;
+    height: 20px;
 }
 .looper {
     margin: 0;
@@ -94,9 +95,24 @@ export default {
 }
 .papa {
     position: relative;
-    width: 51px;
-    height: 63px;
+    width: 50px;
+    height: 64.286px;
     margin: 0;
     float: left;
+}
+.papa .select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0;
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    transform: translate(12px, 12px);
+    border-radius: 50%;
+}
+.papa input:checked ~ .select {
+    opacity: 100%;
 }
 </style>
