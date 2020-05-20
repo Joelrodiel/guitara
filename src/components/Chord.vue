@@ -4,7 +4,8 @@
             <div class="spacer"></div>
             <div v-for="j in 7" :key="j" class="looper">
                 <label v-for="i in 6" :key="i" class="papa">
-                    <input type="checkbox" class="select">
+                    <input type="checkbox" class="select"
+                        :id="'note_' + ((i-1) + (6*(j-1)))" v-on:click="addNote((i-1) + (6*(j-1)))">
                     <span class="select"></span>
                 </label>
             </div>
@@ -18,7 +19,26 @@
 <script>
 export default {
     name: 'Chord',
+    data: function () {
+        var notes = [];
+        for (var i = 0; i < 7 * 6; i++) {
+            notes[i] = false;
+        }
+        return {
+            notes: notes
+        }
+    },
     methods: {
+        addNote(num) {
+            for (var i = num % 6; i < 7*6; i += 6) {
+                if (i != num) {
+                    var id = 'note_' + i;
+                    document.getElementById(id).checked = false;
+                    this.notes[i] = false;
+                }
+            }
+            this.notes[num] = !this.notes[num];
+        },
         uncheckAll() {
             var checkboxes = new Array();
             checkboxes = document.getElementsByClassName('select');
@@ -89,7 +109,6 @@ export default {
 }
 .looper input {
     position: absolute;
-    opacity: 0;
     cursor: pointer;
     margin: 0;
 }
