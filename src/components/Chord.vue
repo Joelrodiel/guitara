@@ -48,6 +48,9 @@ export default {
                     checkboxes[i].checked = false;
                 }
             }
+            for (var k = 0; i < 7 * 6; i++) {
+                this.notes[k] = false;
+            }
         }
     }
 }
@@ -69,12 +72,11 @@ export default {
 .bgIMG {
     background-image: url("../assets/chordsBG.png");
     width: 306px;
-    height: 467px;
+    height: 497px;
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 10px 20px 10px;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-drag: none;
@@ -98,7 +100,7 @@ export default {
     border-bottom-right-radius: 8px;
 }
 .spacer {
-    height: 20px;
+    height: 46.308px;
 }
 .looper {
     margin: 0;
