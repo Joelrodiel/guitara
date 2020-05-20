@@ -1,6 +1,11 @@
 <template>
     <div class="card center">
         <div class="bgIMG">
+            <label v-for="(s, i) in strings" :key="'str'+i" class="papaS">
+                <input type="checkbox" class="string"
+                    v-on:click="changeString(i)">
+                <span class="string"></span>
+            </label>
             <div class="spacer"></div>
             <div v-for="j in 7" :key="j" class="looper">
                 <label v-for="i in 6" :key="i" class="papa">
@@ -21,11 +26,16 @@ export default {
     name: 'Chord',
     data: function () {
         var notes = [];
+        var strings = [];
         for (var i = 0; i < 7 * 6; i++) {
             notes[i] = false;
+            if (i < 6) {
+                strings[i] = true;
+            }
         }
         return {
-            notes: notes
+            notes: notes,
+            strings: strings
         }
     },
     methods: {
@@ -39,6 +49,9 @@ export default {
             }
             this.notes[num] = !this.notes[num];
         },
+        changeString(num) {
+            this.strings[num] = !this.strings[num];
+        },
         uncheckAll() {
             var checkboxes = new Array();
             checkboxes = document.getElementsByClassName('select');
@@ -48,8 +61,18 @@ export default {
                     checkboxes[i].checked = false;
                 }
             }
-            for (var k = 0; i < 7 * 6; i++) {
+            for (var k = 0; k < 7 * 6; k++) {
                 this.notes[k] = false;
+            }
+            
+            checkboxes = document.getElementsByClassName('string');
+            for (i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
+            }
+            for (k = 0; k < 6; k++) {
+                this.strings[k] = true;
             }
         }
     }
@@ -100,7 +123,7 @@ export default {
     border-bottom-right-radius: 8px;
 }
 .spacer {
-    height: 46.308px;
+    height: 47.5px;
 }
 .looper {
     margin: 0;
@@ -135,5 +158,29 @@ export default {
 }
 .papa input:checked ~ .select {
     opacity: 100%;
+}
+.papaS {
+    position: relative;
+    width: 50px;
+    height: 32.143px;
+    margin: 0;
+    float: left;
+}
+.papaS input {
+    opacity: 0;
+}
+.papaS .string {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 24px;
+    height: 24px;
+    transform: translate(17px, 0);
+    background-image: url("../assets/ou.png");
+    image-rendering: auto;
+}
+.papaS input:checked ~ .string {
+    background-image: url("../assets/cross.png");
 }
 </style>
